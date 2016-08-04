@@ -23,11 +23,16 @@ namespace Natillera.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            Database.SetInitializer<ApplicationDbContext>(new DropCreateDatabaseIfModelChanges<ApplicationDbContext>());
         }
 
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<Natillera.Models.ControlPagos> ControlPagos { get; set; }
+
+        public System.Data.Entity.DbSet<Natillera.Models.Usuario> Usuarios { get; set; }
     }
 }
