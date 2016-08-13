@@ -284,16 +284,16 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
-    <Content Include="Views\ControlPagos\Create.cshtml" />
-    <Content Include="Views\ControlPagos\Delete.cshtml" />
-    <Content Include="Views\ControlPagos\Details.cshtml" />
-    <Content Include="Views\ControlPagos\Edit.cshtml" />
-    <Content Include="Views\ControlPagos\Index.cshtml" />
     <Content Include="Views\Usuarios\Create.cshtml" />
     <Content Include="Views\Usuarios\Delete.cshtml" />
     <Content Include="Views\Usuarios\Details.cshtml" />
     <Content Include="Views\Usuarios\Edit.cshtml" />
     <Content Include="Views\Usuarios\Index.cshtml" />
+    <Content Include="Views\ControlPagos\Create.cshtml" />
+    <Content Include="Views\ControlPagos\Delete.cshtml" />
+    <Content Include="Views\ControlPagos\Details.cshtml" />
+    <Content Include="Views\ControlPagos\Edit.cshtml" />
+    <Content Include="Views\ControlPagos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

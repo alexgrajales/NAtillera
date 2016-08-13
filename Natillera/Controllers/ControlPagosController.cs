@@ -17,7 +17,8 @@ namespace Natillera.Controllers
         // GET: ControlPagos
         public ActionResult Index()
         {
-            return View(db.ControlPagos.ToList());
+            var controlPagos = db.ControlPagos.Include(c => c.usuario);
+            return View(controlPagos.ToList());
         }
 
         // GET: ControlPagos/Details/5
@@ -38,6 +39,7 @@ namespace Natillera.Controllers
         // GET: ControlPagos/Create
         public ActionResult Create()
         {
+            ViewBag.usuarioID = new SelectList(db.Usuarios, "Id", "Nombre");
             return View();
         }
 
@@ -46,7 +48,7 @@ namespace Natillera.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Fecha,Valor")] ControlPagos controlPagos)
+        public ActionResult Create([Bind(Include = "Id,Fecha,Valor,usuarioID")] ControlPagos controlPagos)
         {
             if (ModelState.IsValid)
             {
@@ -55,6 +57,7 @@ namespace Natillera.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.usuarioID = new SelectList(db.Usuarios, "Id", "Nombre", controlPagos.usuarioID);
             return View(controlPagos);
         }
 
@@ -70,6 +73,7 @@ namespace Natillera.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.usuarioID = new SelectList(db.Usuarios, "Id", "Nombre", controlPagos.usuarioID);
             return View(controlPagos);
         }
 
@@ -78,7 +82,7 @@ namespace Natillera.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Fecha,Valor")] ControlPagos controlPagos)
+        public ActionResult Edit([Bind(Include = "Id,Fecha,Valor,usuarioID")] ControlPagos controlPagos)
         {
             if (ModelState.IsValid)
             {
@@ -86,6 +90,7 @@ namespace Natillera.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.usuarioID = new SelectList(db.Usuarios, "Id", "Nombre", controlPagos.usuarioID);
             return View(controlPagos);
         }
 
