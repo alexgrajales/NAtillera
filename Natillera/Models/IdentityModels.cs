@@ -34,5 +34,7 @@ namespace Natillera.Models
         public System.Data.Entity.DbSet<Natillera.Models.ControlPagos> ControlPagos { get; set; }
 
         public System.Data.Entity.DbSet<Natillera.Models.Usuario> Usuarios { get; set; }
+
+        public System.Data.Entity.DbSet<Natillera.Models.Prestamo> Prestamoes { get; set; }
     }
 }

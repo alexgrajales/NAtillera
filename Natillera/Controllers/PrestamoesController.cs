@@ -9,124 +9,113 @@ using System.Web.Mvc;
 using Natillera.Models;
 
 namespace Natillera.Controllers
-{    
-    public class ControlPagosController : Controller
+{
+    public class PrestamoesController : Controller
     {
-        bool FindPAgos = false;
-        int? IdFinPagos;
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: ControlPagos
+        // GET: Prestamoes
         public ActionResult Index()
         {
-            ControlPagos cp = null;
-            ViewBag.total = new float();
-            ViewBag.total = 0;
-            ViewBag.usuarioID = new SelectList(db.Usuarios, "Id", "Nombre");
-            
-            var controlPagos = db.ControlPagos.Include(c => c.usuario);
-            foreach (var item in controlPagos.ToList())
-            {
-                ViewBag.total = ViewBag.total + item.Valor; 
-            }
-            return View(controlPagos.ToList());
-        }        
+            var prestamoes = db.Prestamoes.Include(p => p.usuario);
+            return View(prestamoes.ToList());
+        }
 
-        // GET: ControlPagos/Details/5
+        // GET: Prestamoes/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ControlPagos controlPagos = db.ControlPagos.Find(id);
-            if (controlPagos == null)
+            Prestamo prestamo = db.Prestamoes.Find(id);
+            if (prestamo == null)
             {
                 return HttpNotFound();
             }
-            return View(controlPagos);
+            return View(prestamo);
         }
 
-        // GET: ControlPagos/Create
+        // GET: Prestamoes/Create
         public ActionResult Create()
         {
             ViewBag.usuarioID = new SelectList(db.Usuarios, "Id", "Nombre");
             return View();
         }
 
-        // POST: ControlPagos/Create
+        // POST: Prestamoes/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Fecha,Valor,usuarioID")] ControlPagos controlPagos)
+        public ActionResult Create([Bind(Include = "Id,FechaInicial,FechaFin,Valor,Porcentaje,usuarioID")] Prestamo prestamo)
         {
             if (ModelState.IsValid)
             {
-                db.ControlPagos.Add(controlPagos);
+                db.Prestamoes.Add(prestamo);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.usuarioID = new SelectList(db.Usuarios, "Id", "Nombre", controlPagos.usuarioID);
-            return View(controlPagos);
-        }        
+            ViewBag.usuarioID = new SelectList(db.Usuarios, "Id", "Nombre", prestamo.usuarioID);
+            return View(prestamo);
+        }
 
-        // GET: ControlPagos/Edit/5
+        // GET: Prestamoes/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ControlPagos controlPagos = db.ControlPagos.Find(id);
-            if (controlPagos == null)
+            Prestamo prestamo = db.Prestamoes.Find(id);
+            if (prestamo == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.usuarioID = new SelectList(db.Usuarios, "Id", "Nombre", controlPagos.usuarioID);
-            return View(controlPagos);
+            ViewBag.usuarioID = new SelectList(db.Usuarios, "Id", "Nombre", prestamo.usuarioID);
+            return View(prestamo);
         }
 
-        // POST: ControlPagos/Edit/5
+        // POST: Prestamoes/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Fecha,Valor,usuarioID")] ControlPagos controlPagos)
+        public ActionResult Edit([Bind(Include = "Id,FechaInicial,FechaFin,Valor,Porcentaje,usuarioID")] Prestamo prestamo)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(controlPagos).State = EntityState.Modified;
+                db.Entry(prestamo).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.usuarioID = new SelectList(db.Usuarios, "Id", "Nombre", controlPagos.usuarioID);
-            return View(controlPagos);
+            ViewBag.usuarioID = new SelectList(db.Usuarios, "Id", "Nombre", prestamo.usuarioID);
+            return View(prestamo);
         }
 
-        // GET: ControlPagos/Delete/5
+        // GET: Prestamoes/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ControlPagos controlPagos = db.ControlPagos.Find(id);
-            if (controlPagos == null)
+            Prestamo prestamo = db.Prestamoes.Find(id);
+            if (prestamo == null)
             {
                 return HttpNotFound();
             }
-            return View(controlPagos);
+            return View(prestamo);
         }
 
-        // POST: ControlPagos/Delete/5
+        // POST: Prestamoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            ControlPagos controlPagos = db.ControlPagos.Find(id);
-            db.ControlPagos.Remove(controlPagos);
+            Prestamo prestamo = db.Prestamoes.Find(id);
+            db.Prestamoes.Remove(prestamo);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

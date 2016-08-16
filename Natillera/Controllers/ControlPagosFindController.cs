@@ -9,37 +9,33 @@ using System.Web.Mvc;
 using Natillera.Models;
 
 namespace Natillera.Controllers
-{    
-    public class ControlPagosController : Controller
+{
+    public class ControlPagosFindController : Controller
     {
-        bool FindPAgos = false;
-        int? IdFinPagos;
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: ControlPagos
-        public ActionResult Index()
-        {
-            ControlPagos cp = null;
-            ViewBag.total = new float();
-            ViewBag.total = 0;
-            ViewBag.usuarioID = new SelectList(db.Usuarios, "Id", "Nombre");
-            
+        // GET: ControlPagosFind
+        public ActionResult Index(int? id)
+        {            
             var controlPagos = db.ControlPagos.Include(c => c.usuario);
-            foreach (var item in controlPagos.ToList())
-            {
-                ViewBag.total = ViewBag.total + item.Valor; 
-            }
-            return View(controlPagos.ToList());
-        }        
+            ViewBag.usuarioID = new SelectList(db.Usuarios, "Id", "Nombre");
+            ViewBag.iduser = new int();
+            if (ViewBag.usuarioID.DataGroupField != null)
+               id = ViewBag.usuarioID.Id;
+            if (id.Equals(null))
+                id = 1;
+            var obj = db.ControlPagos.SqlQuery("select * from controlPagos where usuarioId ="+ id).ToList<ControlPagos>();
+            return View(obj);
+        }
 
-        // GET: ControlPagos/Details/5
+        // GET: ControlPagosFind/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ControlPagos controlPagos = db.ControlPagos.Find(id);
+            ControlPagos controlPagos = db.ControlPagos.Find(id);           
             if (controlPagos == null)
             {
                 return HttpNotFound();
@@ -47,14 +43,14 @@ namespace Natillera.Controllers
             return View(controlPagos);
         }
 
-        // GET: ControlPagos/Create
+        // GET: ControlPagosFind/Create
         public ActionResult Create()
         {
             ViewBag.usuarioID = new SelectList(db.Usuarios, "Id", "Nombre");
             return View();
         }
 
-        // POST: ControlPagos/Create
+        // POST: ControlPagosFind/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -67,12 +63,11 @@ namespace Natillera.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             ViewBag.usuarioID = new SelectList(db.Usuarios, "Id", "Nombre", controlPagos.usuarioID);
             return View(controlPagos);
-        }        
+        }
 
-        // GET: ControlPagos/Edit/5
+        // GET: ControlPagosFind/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -88,7 +83,7 @@ namespace Natillera.Controllers
             return View(controlPagos);
         }
 
-        // POST: ControlPagos/Edit/5
+        // POST: ControlPagosFind/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -105,7 +100,7 @@ namespace Natillera.Controllers
             return View(controlPagos);
         }
 
-        // GET: ControlPagos/Delete/5
+        // GET: ControlPagosFind/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -120,7 +115,7 @@ namespace Natillera.Controllers
             return View(controlPagos);
         }
 
-        // POST: ControlPagos/Delete/5
+        // POST: ControlPagosFind/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

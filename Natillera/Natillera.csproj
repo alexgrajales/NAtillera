@@ -208,8 +208,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ControlPagosController.cs" />
+    <Compile Include="Controllers\ControlPagosFindController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PrestamoesController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -218,6 +220,7 @@
     <Compile Include="Models\ControlPagos.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Prestamo.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -294,6 +297,16 @@
     <Content Include="Views\ControlPagos\Details.cshtml" />
     <Content Include="Views\ControlPagos\Edit.cshtml" />
     <Content Include="Views\ControlPagos\Index.cshtml" />
+    <Content Include="Views\ControlPagosFind\Create.cshtml" />
+    <Content Include="Views\ControlPagosFind\Delete.cshtml" />
+    <Content Include="Views\ControlPagosFind\Details.cshtml" />
+    <Content Include="Views\ControlPagosFind\Edit.cshtml" />
+    <Content Include="Views\ControlPagosFind\Index.cshtml" />
+    <Content Include="Views\Prestamoes\Create.cshtml" />
+    <Content Include="Views\Prestamoes\Delete.cshtml" />
+    <Content Include="Views\Prestamoes\Details.cshtml" />
+    <Content Include="Views\Prestamoes\Edit.cshtml" />
+    <Content Include="Views\Prestamoes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
